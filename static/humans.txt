@@ -1,0 +1,19 @@
+/* TEAM */
+
+  Chief: Stanley Yang
+  Contact: me [at] stanleycyang.com
+  Twitter: @stanleycyang
+  From: Santa Monica, Californa, United States of America
+
+/* THANKS */
+
+  Koa Maintainer: Jonathan Ong
+  Twitter: @jongleberry
+  From: Santa Monica, California, United States of America
+
+/* Site */
+
+  Last update: 2015/10/11
+  Language: English
+  Standards: HTML5, CSS, KoaJS
+  IDE: Vim, Sublime Text
