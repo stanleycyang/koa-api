@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./bin/www -w config.js -w server",
+    "lint": "eslint bin/www client server config.js"
   },
   "keywords": [],
   "author": "Stanley C Yang <stanley@stanleycyang.com> (http://www.stanleycyang.com)",

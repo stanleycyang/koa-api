@@ -1,1 +1,9 @@
+.DS_Store*
+*.log
+*.map
+*.gz
+
 node_modules
+coverage
+build
+.env
