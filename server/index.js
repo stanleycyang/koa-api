@@ -24,7 +24,6 @@ app.use(require('koa-mount')('/api', compose(require('./api'))))
 app.use(compose(require('./routes')))
 
 // serve static files
-// TODO: use shasums on built files for better caching
 app.use(require('koa-static')(path.resolve('static'), {
   maxage: config.env === 'production'
     ? 31536000
