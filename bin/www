@@ -1,0 +1,13 @@
+#! /usr/bin/env node
+'use strict'
+
+const http = require('http')
+
+const pkg = require('../package.json')
+const config = require('../config')
+const app = require('../server')
+
+http.createServer(app.callback()).listen(config.port, function (err) {
+  if (err) throw err
+    console.log(`${pkg.name} listening on port ${this.address().port}`)
+})

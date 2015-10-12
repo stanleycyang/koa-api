@@ -1,6 +1,6 @@
 'use strict'
 
-const compose = require('koa-compose')
+const compose = require('koa-compose') // Compose middleware. This allows us to plug and play middleware where we need it. ie. compose([a, b, c])
 const path = require('path')
 const koa = require('koa')
 const cors = require('kcors')
@@ -9,11 +9,7 @@ const config = require('../config')
 
 const app = module.exports = koa()
 
-// Add CORS
-app.use(cors())
-
-//compress everything. Reduce 70% size of the packets going around the the website
-// gzip compatible browser requests to a web server, a web server can compress the response to the browser back and the browser can decompress the response and finally the browser get the original response
+// Compress the packets
 app.use(require('koa-compress')({
   // To make it work with streaming
   // flush: require('zlib').Z_SYNC_FLUSH
@@ -21,30 +17,28 @@ app.use(require('koa-compress')({
 
 // HTTP Caching
 app.use(require('koa-fresh')())
-//ETag or entity tag is a part of HTTP, and it is one of several mechanisms that provides cache validation, which allows a client to make conditional requests. This allows caches to be more efficient, and saves bandwidth, since the web server does not need to send a full response if the content has not changed.
 app.use(require('koa-etag')())
 
 // Mount the API routes
 app.use(require('koa-mount')('/api', compose(require('./api'))))
 app.use(compose(require('./routes')))
 
-// Server static files
+// serve static files
+// TODO: use shasums on built files for better caching
 app.use(require('koa-static')(path.resolve('static'), {
   maxage: config.env === 'production'
-    ? 31536000 // brower cache max-age in milliseconds
-    : 0, // default
+    ? 31536000
+    : 0,
   hidden: false,
   index: false
 }))
 
-// serve the favicon
-app.use(require('koa-static')(require('favicon'), {
-  maxage: 31536000,
-  hidden: false,
-  index: false
+// Serve favicon
+app.use(require('koa-favicon')(path.resolve('static/favicon.ico'), {
+  maxAge: 31536000 // cache-control max-age directive in ms, defaults to 1 day
 }))
 
-// 301 redirect back home on 404
+// Redirect 404 pages back to homepage
 app.use(function * (next) {
   this.status = 301
   this.redirect('/')
